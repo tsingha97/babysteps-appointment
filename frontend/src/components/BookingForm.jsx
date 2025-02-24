@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const BookingForm = ({ initialData, onClose, onSubmit, isEditMode }) => {
+  // Initialize form state with initial data if available, otherwise set default values
   const [formData, setFormData] = useState(
     initialData || {
       patientName: "",
@@ -9,6 +10,7 @@ const BookingForm = ({ initialData, onClose, onSubmit, isEditMode }) => {
     }
   );
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
@@ -17,8 +19,10 @@ const BookingForm = ({ initialData, onClose, onSubmit, isEditMode }) => {
   return (
     <div className="booking-form-overlay">
       <div className="booking-form">
+        {/* Title dynamically changes based on edit mode */}
         <h3>{isEditMode ? "Edit" : "Book"} Appointment</h3>
         <form onSubmit={handleSubmit}>
+          {/* Patient Name Input Field */}
           <div className="form-group">
             <label>Patient Name</label>
             <input
@@ -31,6 +35,7 @@ const BookingForm = ({ initialData, onClose, onSubmit, isEditMode }) => {
             />
           </div>
 
+          {/* Appointment Type Dropdown */}
           <div className="form-group">
             <label>Appointment Type</label>
             <select
@@ -45,6 +50,7 @@ const BookingForm = ({ initialData, onClose, onSubmit, isEditMode }) => {
             </select>
           </div>
 
+          {/* Notes Text Area */}
           <div className="form-group">
             <label>Notes (Optional)</label>
             <textarea
@@ -55,6 +61,7 @@ const BookingForm = ({ initialData, onClose, onSubmit, isEditMode }) => {
             />
           </div>
 
+          {/* Action Buttons */}
           <div className="form-actions">
             <button type="button" onClick={onClose}>
               Cancel

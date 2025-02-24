@@ -3,7 +3,10 @@ import { useState } from "react";
 import BookingForm from "./BookingForm";
 
 const AppointmentsList = ({ appointments, onDelete, onUpdate }) => {
+  // State to track the appointment being edited
   const [editingAppointment, setEditingAppointment] = useState(null);
+
+  // Function to handle submission of the edited appointment
   const handleEditSubmit = async (formData) => {
     const success = await onUpdate(editingAppointment._id, {
       ...formData,
@@ -11,6 +14,7 @@ const AppointmentsList = ({ appointments, onDelete, onUpdate }) => {
       doctorId: editingAppointment.doctorId._id,
     });
 
+    // Close the editing form if update is successful
     if (success) setEditingAppointment(null);
   };
 
@@ -18,10 +22,12 @@ const AppointmentsList = ({ appointments, onDelete, onUpdate }) => {
     <div className="appointments-list">
       <h2>Upcoming Appointments</h2>
 
+      {/* Display message if no appointments are booked */}
       {appointments.length === 0 ? (
         <p className="no-appointments">No upcoming appointments booked yet.</p>
       ) : (
         <div className="appointments-grid">
+          {/* Render each appointment card */}
           {appointments.map((appointment) => (
             <div key={appointment._id} className="appointment-card">
               <div className="appointment-header">
@@ -33,6 +39,7 @@ const AppointmentsList = ({ appointments, onDelete, onUpdate }) => {
                 </span>
               </div>
 
+              {/* Display appointment details */}
               <div className="appointment-details">
                 <p>
                   <strong>Doctor:</strong>{" "}
@@ -48,6 +55,7 @@ const AppointmentsList = ({ appointments, onDelete, onUpdate }) => {
                 )}
               </div>
 
+              {/* Buttons for editing and deleting appointments */}
               <div className="appointment-actions">
                 <button
                   className="edit-btn"
@@ -65,7 +73,7 @@ const AppointmentsList = ({ appointments, onDelete, onUpdate }) => {
             </div>
           ))}
 
-          {/* Edit Form */}
+          {/* Render booking form when an appointment is being edited */}
           {editingAppointment && (
             <BookingForm
               initialData={{
